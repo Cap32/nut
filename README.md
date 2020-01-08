@@ -30,6 +30,12 @@ I think it could not be easier.
 ></textarea>
 ```
 
+### Installing via npm
+
+```bash
+$ npm install @cap32/nut
+```
+
 ## License
 
 MIT
