@@ -21,6 +21,30 @@ enum EDataAttr {
   BgColor
 }
 
+const supported = {
+  ResizeObserver: typeof ResizeObserver == "function"
+};
+
+function warning(
+  condition: boolean,
+  name: string,
+  link: string,
+  polyfill: string
+) {
+  if (!condition) {
+    console.warn(
+      `nut: required ${name}](${link}) polyfill, eg: "${polyfill}".`
+    );
+  }
+}
+
+warning(
+  supported.ResizeObserver,
+  "ResizeObserver",
+  "http://rawgit.com/WICG/ResizeObserver/master/index.html",
+  "https://github.com/que-etc/resize-observer-polyfill"
+);
+
 const dataAttrsMap = new Map<EDataAttr, string>([
   [EDataAttr.Width, "data-nut-width"],
   [EDataAttr.Padding, "data-nut-padding"],
@@ -157,21 +181,25 @@ class NuMutationObserver {
 
 class NuResizeObserver {
   private nuMap = new Map<Node, Nu>();
-  private observer: ResizeObserver;
+  private observer?: ResizeObserver;
 
   constructor() {
-    this.observer = new ResizeObserver(entries => {
-      for (const { target } of entries) {
-        const nu = this.nuMap.get(target);
-        if (nu) nu.render();
-      }
-    });
+    if (supported.ResizeObserver) {
+      this.observer = new ResizeObserver(entries => {
+        for (const { target } of entries) {
+          const nu = this.nuMap.get(target);
+          if (nu) nu.render();
+        }
+      });
+    }
   }
 
   observe(nu: Nu) {
+    const { observer, nuMap } = this;
+    if (!observer) return;
     const { el } = nu;
-    this.nuMap.set(el, nu);
-    this.observer.observe(el);
+    nuMap.set(el, nu);
+    observer.observe(el);
   }
 }
 
