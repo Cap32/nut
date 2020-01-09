@@ -2,6 +2,8 @@
 
 Numbering textarea
 
+![screenshot](/.github/screenshot.gif)
+
 ## Usage
 
 ### Basic usage
