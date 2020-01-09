@@ -1,6 +1,6 @@
 {
   "name": "@cap32/nut",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "line numbering textarea",
   "scripts": {
     "start": "parcel examples/index.html --out-dir temp",
