@@ -81,6 +81,8 @@ function getMeasure(css: CSSStyleDeclaration, styles: TStyles): TMeasure {
     [
       `width: 0`,
       `margin: 0`,
+      `position: absolute`,
+      `pointer-events: none`,
       `padding: ${css.paddingTop} ${css.paddingRight} 0 0`,
       `font-family: ${css.fontFamily}`,
       `font-size: ${css.fontSize}`,
